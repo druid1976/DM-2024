@@ -4,10 +4,15 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, Normalizer
 from sklearn.impute import SimpleImputer
 
 titanic = pd.read_csv("train.csv")
+categorical_features = ['Name', 'Sex', 'Ticket', 'Cabin', 'Embarked']
 
 #print(titanic.describe())
 #print(titanic.info())
 
+
+# need to save below processings to CSV file ???
+
+# MinMax Scaling
 
 numeric_cols = titanic.select_dtypes(include=[np.number]).columns
 X = titanic[numeric_cols]
@@ -15,39 +20,39 @@ X = titanic[numeric_cols]
 norm = MinMaxScaler(feature_range=(0,1)).fit(X)
 X_minmax = pd.DataFrame(norm.transform(X), columns=X.columns)
 
+# Standardization
+
 scale = StandardScaler().fit(X)
 X_scaled = pd.DataFrame(scale.transform(X), columns=X.columns)
 
-"""
 print(X_minmax.describe().round(3))
 print("\n\n")
 print(X_scaled.describe().round(3))
-"""
 
 
-
-# X_deleted = X.dropna()  # Drop rows with missing values
+# Imputing Data
 
 imputer = SimpleImputer(strategy='mean')  # Replace with mean
 X_imputed = imputer.fit_transform(X)
-
 
 # Create normalizers for L-1 and L-2
 normalizer_l1 = Normalizer(norm='l1')
 normalizer_l2 = Normalizer(norm='l2')
 
 # Normalize data using L-1 and L-2
-data_l1 = normalizer_l1.fit_transform(X_imputed)
-data_l2 = normalizer_l2.fit_transform(X_imputed)
+normalized_data_l1 = normalizer_l1.fit_transform(X_imputed)
+normalized_data_l2 = normalizer_l2.fit_transform(X_imputed)
+
+
 
 # Observe the normalized data
-print("Original data:\n", X[:5])  # Print the first 5 rows
+print("\n\nOriginal data:\n", X[:5])  # Print the first 5 rows
 
-print("\nL-1 normalized data:\n", data_l1[:5])
-print("L-1 norm sum of each column:\n", data_l1.sum(axis=0))  # Check sum of absolute values
+print("\nL-1 normalized data:\n", normalized_data_l1[:5])
+print("\nL-1 norm sum of each column:\n", normalized_data_l1.sum(axis=0))  # Check sum of absolute values
 
-print("\nL-2 normalized data:\n", data_l2[:5])
-print("L-2 norm sum of squares of each column:\n", (data_l2**2).sum(axis=0))  # Check sum of squares
+print("\n\nL-2 normalized data:\n", normalized_data_l2[:5])
+print("\nL-2 norm sum of squares of each column:\n", (normalized_data_l2**2).sum(axis=0))  # Check sum of squares
 
 
 """
@@ -74,12 +79,7 @@ def binarize_lonliness(row):
 
 titanic['IsAlone'] = titanic.apply(binarize_lonliness, axis=1)
 
-print(titanic['IsAlone'])
-
-
-
-
-
+titanic.to_csv("processed_titanic.csv", index=False)
 
 
 
