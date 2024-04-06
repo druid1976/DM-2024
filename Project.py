@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, Normalizer
+from sklearn.impute import SimpleImputer
 
 titanic = pd.read_csv("train.csv")
 
@@ -23,17 +24,21 @@ print("\n\n")
 print(X_scaled.describe().round(3))
 """
 
-"""
-# Rows with NaN values are dropped below to be able to perform L1 and L2 Normalization
-X_deleted = X.dropna()  # Drop rows with missing values
+
+
+# X_deleted = X.dropna()  # Drop rows with missing values
+
+imputer = SimpleImputer(strategy='mean')  # Replace with mean
+X_imputed = imputer.fit_transform(X)
+
 
 # Create normalizers for L-1 and L-2
 normalizer_l1 = Normalizer(norm='l1')
 normalizer_l2 = Normalizer(norm='l2')
 
 # Normalize data using L-1 and L-2
-data_l1 = normalizer_l1.fit_transform(X_deleted)
-data_l2 = normalizer_l2.fit_transform(X_deleted)
+data_l1 = normalizer_l1.fit_transform(X_imputed)
+data_l2 = normalizer_l2.fit_transform(X_imputed)
 
 # Observe the normalized data
 print("Original data:\n", X[:5])  # Print the first 5 rows
@@ -43,7 +48,7 @@ print("L-1 norm sum of each column:\n", data_l1.sum(axis=0))  # Check sum of abs
 
 print("\nL-2 normalized data:\n", data_l2[:5])
 print("L-2 norm sum of squares of each column:\n", (data_l2**2).sum(axis=0))  # Check sum of squares
-"""
+
 
 """
 Why we don't use Discretization'
@@ -52,7 +57,7 @@ Potential Information Loss: Discretization can group together data points that m
 Choosing Cut Points: Defining meaningful cut points for discretization can be subjective and impact model performance.
 """
 
-"""
+
 def binarize_age(age):
     if age>=18:
         return 1 # Adult
@@ -70,7 +75,7 @@ def binarize_lonliness(row):
 titanic['IsAlone'] = titanic.apply(binarize_lonliness, axis=1)
 
 print(titanic['IsAlone'])
-"""
+
 
 
 
