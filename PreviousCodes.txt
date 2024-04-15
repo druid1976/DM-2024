@@ -1,0 +1,64 @@
+# Create normalizers for L-1 and L-2
+normalizer_l1 = Normalizer(norm='l1')
+normalizer_l2 = Normalizer(norm='l2')
+
+# Normalize data using L-1 and L-2
+normalized_data_l1 = normalizer_l1.fit_transform(X_imputed)
+normalized_data_l2 = normalizer_l2.fit_transform(X_imputed)
+
+
+
+# Observe the normalized data
+print("\n\nOriginal data:\n", X[:5])  # Print the first 5 rows
+
+print("\nL-1 normalized data:\n", normalized_data_l1[:5])
+print("\nL-1 norm sum of each column:\n", normalized_data_l1.sum(axis=0))  # Check sum of absolute values
+
+print("\n\nL-2 normalized data:\n", normalized_data_l2[:5])
+print("\nL-2 norm sum of squares of each column:\n", (normalized_data_l2**2).sum(axis=0))  # Check sum of squares
+
+
+
+#initialize it
+scaler = StandardScaler()
+#calculate all the necessary data to perform the standarization
+scaler.fit(numeric_titanic)
+#apply the standarizer to the data
+titanic_standardized = pd.DataFrame(scaler.transform(numeric_titanic),columns = numeric_cols)
+print(titanic_standardized.std()**2)
+
+print("\n\n\n")
+print(titanic_standardized.head())
+
+print("\n\n\n")
+
+#initialize it
+scaler = MinMaxScaler()
+#calculate all the necessary data to perform the normalization
+scaler.fit(X_imputed)
+#apply the standarizer to the data
+titanic_normalized = pd.DataFrame(scaler.transform(X_imputed),columns = numeric_cols)
+print(titanic_normalized.std()**2) # seems better
+
+print("\n\n\n\n")
+
+print(titanic_normalized.corr())
+
+
+
+"""
+# MinMax Scaling
+norm = MinMaxScaler(feature_range=(0,1)).fit(X_imputed)
+X_minmax = pd.DataFrame(norm.transform(X_imputed), columns=X.columns)
+
+# Standardization
+scale = StandardScaler().fit(X_imputed)
+X_scaled = pd.DataFrame(scale.transform(X_imputed), columns=X.columns)
+
+print(X_minmax.describe().round(3))
+print("\n\n")
+print(X_scaled.describe().round(3))
+"""
+
+
+

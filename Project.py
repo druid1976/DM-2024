@@ -19,18 +19,7 @@ print(numeric_titanic.std()**2)
 
 print("\n\n\n")
 
-#initialize it
-scaler = StandardScaler()
-#calculate all the necessary data to perform the standarization
-scaler.fit(numeric_titanic)
-#apply the standarizer to the data
-titanic_standardized = pd.DataFrame(scaler.transform(numeric_titanic),columns = numeric_cols)
-print(titanic_standardized.std()**2)
 
-print("\n\n\n")
-print(titanic_standardized.head())
-
-print("\n\n\n")
 #initialize it
 scaler = MinMaxScaler()
 #calculate all the necessary data to perform the normalization
@@ -39,8 +28,6 @@ scaler.fit(numeric_titanic)
 titanic_normalized = pd.DataFrame(scaler.transform(numeric_titanic),columns = numeric_cols)
 print(titanic_normalized.std()**2) # seems better
 
-print("\n\n\n")
-print(titanic_normalized.head())
 
 print("\n\n\n\n")
 #we create a variance threshold object
@@ -49,25 +36,22 @@ sel = VarianceThreshold(threshold=0.03)
 titanic_variance_removed = sel.fit_transform(titanic_normalized)
 #we can create a new dataframe using the get_feature_names_out() function to get the names of the selected columns
 titanic_dataframe_variance_removed = pd.DataFrame(titanic_variance_removed, columns = sel.get_feature_names_out())
-print(titanic_dataframe_variance_removed)
+#print(titanic_dataframe_variance_removed)
+
+print("\n\n\n\n")
+
+print(sel.get_support())
 
 print("\n\n\n\n")
 
 print(titanic_normalized.corr())
 
 
-"""
-#this just sets the size of a picture
-plt.figure(figsize=(10,8))
-#here we draw the heatmap
-sns.heatmap(titanic_normalized.corr(), cmap='Greys')
-
 
 #this just sets the size of a picture
 plt.figure(figsize=(10,8))
 #here we draw the heatmap
-sns.heatmap(numeric_titanic.corr(), cmap='Greys')
-"""
+sns.heatmap(titanic_normalized.corr(), cmap='YlGnBu')
 
 
 # Impute missing values using SimpleImputer (replace with your preferred strategy)
@@ -99,7 +83,7 @@ feature2 = titanic_new[:, 1]
 # Plot the data, coloring by survival class
 plt.plot(feature1[y_test  == 0], feature2[y_test  == 0], 'ro', alpha=0.5, label='Not Survived')
 plt.plot(feature1[y_test  == 1], feature2[y_test  == 1], 'go', alpha=0.5, label='Survived')
-
+"""
 # Customize plot elements
 plt.xlabel(skb_object.get_feature_names_out()[0])
 plt.ylabel(skb_object.get_feature_names_out()[1])
@@ -107,7 +91,7 @@ plt.xlim([np.min(feature1) - 1, np.max(feature1) + 1])
 plt.ylim([np.min(feature2) - 1, np.max(feature2) + 1])
 plt.legend()
 plt.show()
-
+"""
 
 
 
