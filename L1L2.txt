@@ -1,0 +1,18 @@
+# Create normalizers for L-1 and L-2
+normalizer_l1 = Normalizer(norm='l1')
+normalizer_l2 = Normalizer(norm='l2')
+
+# Normalize data using L-1 and L-2
+normalized_data_l1 = normalizer_l1.fit_transform(X_imputed)
+normalized_data_l2 = normalizer_l2.fit_transform(X_imputed)
+
+
+
+# Observe the normalized data
+print("\n\nOriginal data:\n", X[:5])  # Print the first 5 rows
+
+print("\nL-1 normalized data:\n", normalized_data_l1[:5])
+print("\nL-1 norm sum of each column:\n", normalized_data_l1.sum(axis=0))  # Check sum of absolute values
+
+print("\n\nL-2 normalized data:\n", normalized_data_l2[:5])
+print("\nL-2 norm sum of squares of each column:\n", (normalized_data_l2**2).sum(axis=0))  # Check sum of squares
