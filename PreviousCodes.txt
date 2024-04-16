@@ -62,3 +62,26 @@ print(X_scaled.describe().round(3))
 
 
 
+
+
+
+The code you provided includes elements of data pre-processing, feature selection, and feature extraction, but it doesn't strictly follow the typical definitions:
+
+Data Pre-processing:
+
+Imputation: You correctly use SimpleImputer to fill missing values in numerical columns with the mean strategy.
+Feature Selection:
+
+The code doesn't explicitly perform feature selection techniques like chi-squared, f-classif, or mutual information to select the most relevant features.
+However, you can argue that dropping features like Embarked (after one-hot encoding), Name, Ticket, and Cabin could be considered a form of feature selection based on domain knowledge (these features might not be directly predictive of survival).
+Feature Extraction:
+
+You perform feature extraction by:
+One-Hot Encoding: You convert categorical features like Embarked and Sex into numerical features using OneHotEncoder. This creates new features representing categories within the original features.
+Creating New Features: You define functions like binarize_age and binarize_lonliness to create new features (IsAdult and IsAlone) based on existing features. This transforms the data and potentially captures new information.
+Improvements and Considerations:
+
+Feature Selection Techniques: You could consider adding explicit feature selection steps using SelectKBest or other methods after feature extraction.
+Standardization: Scaling features using StandardScaler is a common data pre-processing step, but it's applied after feature extraction in your code. It might be better to standardize before one-hot encoding to avoid inflating the influence of high-cardinality features.
+Alternative Feature Extraction: Explore dimensionality reduction techniques like PCA or t-SNE to create new, lower-dimensional features that capture most of the information.
+Overall, your code demonstrates a good understanding of data pre-processing concepts. By incorporating some refinements and considering the suggestions above, you can achieve a more comprehensive approach to feature engineering for your machine learning task.

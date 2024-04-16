@@ -10,14 +10,14 @@ import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.feature_selection import SelectKBest, chi2, f_classif, mutual_info_classif
 
 titanic = pd.read_csv("train.csv")
 numeric_cols = titanic.select_dtypes(include=[np.number]).columns
 numeric_data = titanic[numeric_cols]
-
+target = titanic['Survived']
 # Imputing Data
 
 imputer = SimpleImputer(strategy='mean')  # Replace with mean
@@ -31,6 +31,7 @@ scaler.fit(X_imputed)
 #apply the standarizer to the data
 titanic_standardized = pd.DataFrame(scaler.transform(X_imputed),columns = numeric_cols)
 titanic[numeric_cols] = titanic_standardized
+
 
 def feature_transform(titanic_data):
     encoder = OneHotEncoder()
@@ -65,13 +66,24 @@ def binarize_lonliness(row):
     
     
 def drop_features(titanic_data):
-    return titanic_data.drop(['Embarked','Name','Ticket','Cabin','Sex','N'], axis=1,errors="ignore")
+    return titanic_data.drop(['Embarked','Parch','SibSp','Name','Ticket','Cabin','Sex','N'], axis=1,errors="ignore")
 
+# We can remove columns 'Sex', 'SibSp' and 'Parch' since we binarized them
 titanic['IsAdult'] = titanic['Age'].apply(binarize_age)
-titanic['IsAlone'] = titanic.apply(binarize_lonliness, axis=1)
+#titanic['IsAlone'] = titanic.apply(binarize_lonliness, axis=1)
 
 titanic = feature_transform(titanic)
+
+scores_chi2, p_vals_chi2 = chi2(X_imputed, target)
+scores_anova, p_vals_anova = f_classif(X_imputed, target)
+scores_mi = mutual_info_classif(X_imputed, target)
+pd.DataFrame(scores_chi2, numeric_cols).plot(kind='barh', title='Chi squared')
+pd.DataFrame(scores_anova, numeric_cols).plot(kind='barh', title='ANOVA')
+pd.DataFrame(scores_mi, numeric_cols).plot(kind='barh', title='Mutual Information')
+
 titanic = drop_features(titanic)
+
+
 #cols = ['Parch','Fare']
 #print(titanic[cols].tail())
 
@@ -82,7 +94,8 @@ print(titanic_standardized.std()**2)
 
 #this just sets the size of a picture
 plt.figure(figsize=(10,8))
-#here we draw the heatmap
+#here we draw the heatmap, SibSp and Parch are corralated, so we can remove one of them. Or we can remove
+# both since we have column as 'IsAlone'
 sns.heatmap(titanic_standardized.corr(), cmap='YlGnBu')
 
 
@@ -92,16 +105,7 @@ y = titanic['Survived']
 X_data = scaler.fit_transform(X)
 y_data = y.to_numpy()
 
-print('\n\n')
 
-print(X_data)
-print('\n\n')
-print(y_data)
-
-
-
-
-#print(titanic[titanic['PassengerId']==6].Age)
 #titanic.to_csv("processed_titanic.csv", index=False)
 
 
