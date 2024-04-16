@@ -83,6 +83,7 @@ feature2 = titanic_new[:, 1]
 # Plot the data, coloring by survival class
 plt.plot(feature1[y_test  == 0], feature2[y_test  == 0], 'ro', alpha=0.5, label='Not Survived')
 plt.plot(feature1[y_test  == 1], feature2[y_test  == 1], 'go', alpha=0.5, label='Survived')
+
 """
 # Customize plot elements
 plt.xlabel(skb_object.get_feature_names_out()[0])

@@ -61,27 +61,37 @@ print(X_scaled.describe().round(3))
 """
 
 
+def binarize_lonliness(row):
+    if row['SibSp']+row['Parch']==0:
+        return 1 # Alone
+    elif row['SibSp']+row['Parch']>0:
+        return 0 # Not Alone
 
 
+titanic['IsAlone'] = titanic.apply(binarize_lonliness, axis=1)
 
 
-The code you provided includes elements of data pre-processing, feature selection, and feature extraction, but it doesn't strictly follow the typical definitions:
+SelectKBest
 
-Data Pre-processing:
+# Feature selection using chi-squared for classification
+skb_object = SelectKBest(f_classif, k=3)
+titanic_new = skb_object.fit_transform(titanic[numeric_cols], target)
 
-Imputation: You correctly use SimpleImputer to fill missing values in numerical columns with the mean strategy.
-Feature Selection:
+feature1 = titanic_new[:, 0]
+feature2 = titanic_new[:, 1]
+feature3 = titanic_new[:, 2]
 
-The code doesn't explicitly perform feature selection techniques like chi-squared, f-classif, or mutual information to select the most relevant features.
-However, you can argue that dropping features like Embarked (after one-hot encoding), Name, Ticket, and Cabin could be considered a form of feature selection based on domain knowledge (these features might not be directly predictive of survival).
-Feature Extraction:
+#here we are drawing each sample with a different color
+#the easier it is to separate the classes, the better is the performance of the picked features
+# Plot all pairwise combinations of the top 3 features
+plt.plot(feature1[target==0], feature2[target==0], 'r.')
+plt.plot(feature1[target==1], feature2[target==1], 'g.')
+plt.plot(feature1[target==0], feature3[target==0], 'b.')
+plt.plot(feature1[target==1], feature3[target==1], 'c.')
 
-You perform feature extraction by:
-One-Hot Encoding: You convert categorical features like Embarked and Sex into numerical features using OneHotEncoder. This creates new features representing categories within the original features.
-Creating New Features: You define functions like binarize_age and binarize_lonliness to create new features (IsAdult and IsAlone) based on existing features. This transforms the data and potentially captures new information.
-Improvements and Considerations:
+plt.xlabel(skb_object.get_feature_names_out()[0])
+plt.ylabel(skb_object.get_feature_names_out().all())
 
-Feature Selection Techniques: You could consider adding explicit feature selection steps using SelectKBest or other methods after feature extraction.
-Standardization: Scaling features using StandardScaler is a common data pre-processing step, but it's applied after feature extraction in your code. It might be better to standardize before one-hot encoding to avoid inflating the influence of high-cardinality features.
-Alternative Feature Extraction: Explore dimensionality reduction techniques like PCA or t-SNE to create new, lower-dimensional features that capture most of the information.
-Overall, your code demonstrates a good understanding of data pre-processing concepts. By incorporating some refinements and considering the suggestions above, you can achieve a more comprehensive approach to feature engineering for your machine learning task.
+plt.xlim([np.min(feature1)-1, np.max(feature1)+1])
+plt.ylim([np.min(feature2)-1, np.max(feature2)+1])
+plt.show()
