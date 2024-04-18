@@ -24,6 +24,32 @@ classifier = SVC()
 pd.options.mode.copy_on_write = True
 titanic = pd.read_csv('train.csv')
 
+"""
+X = titanic[['Pclass','Age','Fare','Sex']]
+X['Sex'] = X.Sex.copy().apply(lambda x : 1.0 if x == 'male' else 2.0).copy()
+
+X = X.fillna(0)
+X = X.to_numpy()
+
+y = titanic['Survived']
+y = y.to_numpy()
+
+test_data = pd.read_csv('test.csv')
+
+X_test = titanic[['Pclass','Age','Fare','Sex']]
+X_test.Sex = X_test.Sex.apply(lambda x : 1.0 if x == 'male' else 2.0)
+X_test = X_test.fillna(0)
+X_test = X_test.to_numpy()
+y_test = titanic['Survived']
+y_test = y_test.to_numpy()
+
+classifier.fit(X,y)
+predicts = classifier.predict(X_test)
+
+print(classification_report(y_test, predicts))
+"""
+
+
 numeric_cols = titanic.select_dtypes(include=[np.number]).columns
 numeric_data = titanic[numeric_cols]
 target = titanic['Survived']
@@ -81,24 +107,24 @@ def drop_features(titanic_data):
 titanic['IsAdult'] = titanic['Age'].apply(binarize_age)
 titanic['IsAlone'] = titanic.apply(binarize_lonliness, axis=1)
 
-"""
+
 #this just sets the size of a picture
 plt.figure(figsize=(10,8))
 #here we draw the heatmap, SibSp and Parch are corralated, so we can remove one of them. Or we can remove
 # both since we have column as 'IsAlone'
 sns.heatmap(titanic_standardized.corr(), cmap='YlGnBu')
-"""
+
 
 titanic = feature_transform(titanic)
 
-"""
+
 scores_chi2, p_vals_chi2 = chi2(X_imputed, target)
 scores_anova, p_vals_anova = f_classif(X_imputed, target)
 scores_mi = mutual_info_classif(X_imputed, target)
 pd.DataFrame(scores_chi2, numeric_cols).plot(kind='barh', title='Chi squared')
 pd.DataFrame(scores_anova, numeric_cols).plot(kind='barh', title='ANOVA')
 pd.DataFrame(scores_mi, numeric_cols).plot(kind='barh', title='Mutual Information')
-"""
+
 
 # we encoded columns 'Embarked' and 'Sex' so we dont need them. Column 'N' is formed during OneHotEncoding represents none values so it is not relevant
 # because absenced values indicated by 0, columns 'Parch','SibSp' are binarized. 'Name','Ticket' and'Cabin' are categorical and not relevant to passanger survival
@@ -131,30 +157,8 @@ predicts = classifier.predict(X_test)
 print(classification_report(y_test, predicts))
 
 
-"""
-X = titanic[['Pclass','Age','Fare','Sex']]
-X['Sex'] = X.Sex.copy().apply(lambda x : 1.0 if x == 'male' else 2.0).copy()
 
-X = X.fillna(0)
-X = X.to_numpy()
 
-y = titanic['Survived']
-y = y.to_numpy()
-
-test_data = pd.read_csv('test.csv')
-
-X_test = titanic[['Pclass','Age','Fare','Sex']]
-X_test.Sex = X_test.Sex.apply(lambda x : 1.0 if x == 'male' else 2.0)
-X_test = X_test.fillna(0)
-X_test = X_test.to_numpy()
-y_test = titanic['Survived']
-y_test = y_test.to_numpy()
-
-classifier.fit(X,y)
-predicts = classifier.predict(X_test)
-
-print(classification_report(y_test, predicts))
-"""
 
 
 

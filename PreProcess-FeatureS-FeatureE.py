@@ -77,10 +77,10 @@ print('\n\n')
 print(titanic_standardized.std()**2)
 
 #this just sets the size of a picture
-#plt.figure(figsize=(10,8))
+plt.figure(figsize=(10,8))
 #here we draw the heatmap, SibSp and Parch are corralated, so we can remove one of them. Or we can remove
 # both since we have column as 'IsAlone'
-#sns.heatmap(titanic_standardized.corr(), cmap='YlGnBu')
+sns.heatmap(titanic_standardized.corr(), cmap='YlGnBu')
 
 titanic = feature_transform(titanic)
 
