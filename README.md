@@ -10,7 +10,9 @@ This experiment aims to predict survival on the Titanic using machine learning t
 ## Steps to Reproduce the Experiment
 
 1. **Clone the Repository:** Clone this repository to your local machine.
-``` git clone https://github.com/druid1976/DM-2024.git```
+```bash 
+    git clone https://github.com/druid1976/DM-2024.git
+```
 ---
 2. **Navigate to the Directory:** Open your terminal and navigate to the directory where the repository is cloned.
 ---
