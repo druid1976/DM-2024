@@ -135,7 +135,7 @@ def main():
     print(titanic.info())
 
     # uncomment below line if you want to save processed data for later use
-    titanic.to_csv("processed_titanic.csv", index=False)
+    #titanic.to_csv("processed_titanic.csv", index=False)
     
     
     
