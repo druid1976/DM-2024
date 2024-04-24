@@ -21,29 +21,26 @@ This experiment aims to predict survival on the Titanic using machine learning t
     pip install pandas numpy scikit-learn seaborn matplotlib
     ```
 ---
-4. **Run the Experiment Script:** Run the script `PreProcess-FeatureS-FeatureE.py` using Python:
-    ```bash
-    python PreProcess-FeatureS-FeatureE.py
-    ```
----
-5. **Run the Classification Test Script:** Optionally, you can run the `ClassificationTest.py` script to perform classification testing:
+4. **Run the Classification Test Script:** Run the `ClassificationTest.py` script to perform classification experiment:
     ```bash
     python ClassificationTest.py
     ```
 ---
-6. **Results:** After running the scripts, you'll see various visualizations, outputs, and classification reports indicating the preprocessing steps, feature engineering, feature selection process, and classification performance.
+5. **Results:** After running the scripts, you'll see various visualizations, outputs, and classification reports indicating the preprocessing steps, feature engineering, feature selection process, and classification performance.
 ---
-7. **Interpretation:** Interpret the results based on the visualizations, outputs, and classification reports provided in the terminal.
+6. **Interpretation:** Interpret the results based on the visualizations, outputs, and classification reports provided in the terminal.
 ---
-8. **Optional:** If you want to explore the processed data further or use it for other purposes, uncomment the line at the end of the `PreProcess-FeatureS-FeatureE.py` script to save the processed data to a CSV file named `processed_titanic.csv`.
+7. **Optional:** If you want to explore the processed data further or use it for other purposes, uncomment the line at the end of the `PreProcess-FeatureS-FeatureE.py` script to save the processed data to a CSV file named `processed_titanic.csv`. 
+- Also you can check the functions and their descriptions which are used inside the `ClassificationTest.py` from `PreProcess-FeatureS-FeatureE.py`.
 ---
 ## File Descriptions
 
-- `PreProcess-FeatureS-FeatureE.py`: Python script containing the main experiment code.
+- `PreProcess-FeatureS-FeatureE.py`: Python script containing the required fuctions to conduct the experiment.
 - `ClassificationTest.py`: Python script containing the classification testing code.
 - `train.csv`: Titanic dataset used for training the model.
 - `test.csv`: Titanic dataset used for testing the model.
 - `processed_titanic.csv` (optional): Processed Titanic dataset saved after preprocessing.
+- `Results-Before_and_After-Processing.png`: A picture showing the difference of the result of conducted preprocessing.
 ---
 ## Notes
 
