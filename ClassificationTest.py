@@ -24,7 +24,10 @@ classifier = SVC()
 pd.options.mode.copy_on_write = True
 titanic = pd.read_csv('train.csv')
 
-"""
+
+# please run the first commented part to see results of unprocessed data
+
+
 X = titanic[['Pclass','Age','Fare','Sex']]
 X['Sex'] = X.Sex.copy().apply(lambda x : 1.0 if x == 'male' else 2.0).copy()
 
@@ -47,9 +50,11 @@ classifier.fit(X,y)
 predicts = classifier.predict(X_test)
 
 print(classification_report(y_test, predicts))
+
+
+# then run the below commented part to see results of processed data
+
 """
-
-
 numeric_cols = titanic.select_dtypes(include=[np.number]).columns
 numeric_data = titanic[numeric_cols]
 target = titanic['Survived']
@@ -134,11 +139,15 @@ titanic = drop_features(titanic)
 X = titanic.drop(['Survived'],axis=1)
 y = titanic['Survived']
 
-#X_data = scaler.fit_transform(X)
+X_data = scaler.fit_transform(X)
 # Encode the target variable
 le = LabelEncoder()
 
 X = X.to_numpy()
+
+#The SVM classifier (SVC) expects categorical labels (0 or 1) for the target variable (Survived), 
+#but it receives continuous values when target data is numpy array. That is why Label encoding is implemented
+
 y_data = le.fit_transform(y)
 #y_data = y.to_numpy()
 
@@ -155,7 +164,7 @@ classifier.fit(X,y_data)
 predicts = classifier.predict(X_test)
 
 print(classification_report(y_test, predicts))
-
+"""
 
 
 
