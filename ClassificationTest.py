@@ -2,7 +2,7 @@
 """
 Created on Tue Apr 16 17:23:17 2024
 
-@author: EMRE
+@author: EMRE KARATAŞ
 """
 
 from sklearn.svm import SVC
