@@ -31,7 +31,8 @@ This experiment aims to predict survival on the Titanic using machine learning t
 6. **Interpretation:** Interpret the results based on the visualizations, outputs, and classification reports provided in the terminal.
 ---
 7. **Optional:** If you want to explore the processed data further or use it for other purposes, uncomment the line at the end of the `PreProcess-FeatureS-FeatureE.py` script to save the processed data to a CSV file named `processed_titanic.csv`. 
-- Also you can check the functions and their descriptions which are used inside the `ClassificationTest.py` from `PreProcess-FeatureS-FeatureE.py`.
+- Also you can check the functions and their descriptions which are used inside the `ClassificationTest.py` from `PreProcess-FeatureS-FeatureE.py`. 
+- By running the `PreProcess-FeatureS-FeatureE.py` file you can see correlations between features, feature importance graphs and additional informations about the titanic dataset.
 ---
 ## File Descriptions
 
