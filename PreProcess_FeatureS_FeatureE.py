@@ -50,7 +50,7 @@ def binarize_lonliness(row):
     """
     Below function takes a row of data as input and checks the values in 'SibSp' (siblings/spouses onboard) and 
     'Parch' (parents/children onboard) columns. If the sum of these values is greater than 0, assigns 0 (Not Alone),
-    otherwise assigns 1 (Alone). By this binarization IsAlone feature is formed which is more useful and easy to use
+    otherwise assigns 1 (Alone). By this binarization, IsAlone feature is formed which is more useful and easy to use
     """
     if row['SibSp']+row['Parch']>0:
         return 0 # Not Alone

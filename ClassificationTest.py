@@ -87,7 +87,7 @@ def main():
     X = titanic.drop(['Survived'],axis=1)
     y = titanic['Survived']
 
-    X_data = scaler.fit_transform(X)
+    #X_data = scaler.fit_transform(X)
     # Encode the target variable
     le = LabelEncoder()
 
