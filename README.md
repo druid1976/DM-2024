@@ -21,7 +21,7 @@ This experiment aims to predict survival on the Titanic using machine learning t
     pip install pandas numpy scikit-learn seaborn matplotlib
     ```
 ---
-4. **Run the Classification Test Script:** Run the `ClassificationTest.py` script to perform classification experiment:
+4. **Run the Classification Test Script:** Before running the `ClassificationTest.py` file remember to check the comments written inside because per your purpose you might want to comment/uncomment few lines. After that for default you can run the `ClassificationTest.py` script to perform classification experiment:
     ```bash
     python ClassificationTest.py
     ```
